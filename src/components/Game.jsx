@@ -1,0 +1,906 @@
+import { useState, useEffect } from 'react'
+import { supabase } from '../supabaseClient'
+import { FaStar } from 'react-icons/fa'
+
+// Divide questions into 7 paths - each path has 6 questions (5 regular + 1 bonus)
+const allQuestions = [
+  // Path 1 (0-5)
+  { question: 'What is the capital of France?', answer: 'paris', type: 'text', image: 'https://www.studyphim.vn/system/movies/9599/thumbnails/original/Kung%20Fu%20Panda%204%20(2024).jpeg', audio: 'https://www.studyphim.vn/system/movies/9599/thumbnails/original/Kung%20Fu%20Panda%204%20(2024).jpeg' },
+  { question: 'What is 5 + 7?', answer: '12', type: 'text' },
+  { question: 'What color is the sky?', answer: 'blue', type: 'text' },
+  { question: 'How many continents are there?', answer: '7', type: 'text' },
+  { question: 'What is the largest planet in our solar system?', answer: 'jupiter', type: 'text' },
+  { question: 'BONUS: What is the chemical symbol for gold?', answer: 'au', type: 'text', isBonus: true },
+
+  // Path 2 (6-11)
+  { question: 'What year did World War 2 end?', answer: '1945', type: 'text' },
+  { question: 'What is the square root of 64?', answer: '8', type: 'text' },
+  { question: 'What is the capital of Japan?', answer: 'tokyo', type: 'text' },
+  { question: 'How many sides does a hexagon have?', answer: '6', type: 'text' },
+  { question: 'What is the freezing point of water in Celsius?', answer: '0', type: 'text' },
+  { question: 'BONUS: Who painted the Mona Lisa?', answer: 'da vinci', type: 'text', isBonus: true },
+
+  // Path 3 (12-17)
+  { question: 'What is the smallest prime number?', answer: '2', type: 'text' },
+  { question: 'How many hours are in a day?', answer: '24', type: 'text' },
+  { question: 'What is 10 x 10?', answer: '100', type: 'text' },
+  { question: 'What planet is known as the Red Planet?', answer: 'mars', type: 'text' },
+  { question: 'How many legs does a spider have?', answer: '8', type: 'text' },
+  { question: 'BONUS: What is the speed of light in km/s?', answer: '300000', type: 'text', isBonus: true },
+
+  // Path 4 (18-23)
+  { question: 'What is the capital of Italy?', answer: 'rome', type: 'text' },
+  { question: 'How many days in a leap year?', answer: '366', type: 'text' },
+  { question: 'What is 15 + 25?', answer: '40', type: 'text' },
+  { question: 'What gas do plants absorb?', answer: 'co2', type: 'text' },
+  { question: 'How many sides does a triangle have?', answer: '3', type: 'text' },
+  { question: 'BONUS: What year was the internet invented?', answer: '1983', type: 'text', isBonus: true },
+
+  // Path 5 (24-29)
+  { question: 'What is the capital of Spain?', answer: 'madrid', type: 'text' },
+  { question: 'How many minutes in an hour?', answer: '60', type: 'text' },
+  { question: 'What is 20 - 8?', answer: '12', type: 'text' },
+  { question: 'What is H2O?', answer: 'water', type: 'text' },
+  { question: 'How many colors in a rainbow?', answer: '7', type: 'text' },
+  { question: 'BONUS: What is the smallest country in the world?', answer: 'vatican', type: 'text', isBonus: true },
+
+  // Path 6 (30-35)
+  { question: 'What is the capital of Germany?', answer: 'berlin', type: 'text' },
+  { question: 'How many sides does a square have?', answer: '4', type: 'text' },
+  { question: 'What is 9 x 9?', answer: '81', type: 'text' },
+  { question: 'What is the largest ocean?', answer: 'pacific', type: 'text' },
+  { question: 'How many months in a year?', answer: '12', type: 'text' },
+  { question: 'BONUS: What is the tallest mountain in the world?', answer: 'everest', type: 'text', isBonus: true },
+
+  // Path 7 (36-41)
+  { question: 'What is the capital of England?', answer: 'london', type: 'text' },
+  { question: 'How many days in November?', answer: '30', type: 'text' },
+  { question: 'What is 50 / 5?', answer: '10', type: 'text' },
+  { question: 'What animal is known as the King of the Jungle?', answer: 'lion', type: 'text' },
+  { question: 'How many weeks in a year?', answer: '52', type: 'text' },
+  { question: 'BONUS: What is the currency of Japan?', answer: 'yen', type: 'text', isBonus: true },
+]
+
+// Organize questions into 7 paths (6 questions each: 5 regular + 1 bonus)
+const questionPaths = {
+  1: [0, 1, 2, 3, 4, 5],      // Path 1
+  2: [6, 7, 8, 9, 10, 11],    // Path 2
+  3: [12, 13, 14, 15, 16, 17], // Path 3
+  4: [18, 19, 20, 21, 22, 23], // Path 4
+  5: [24, 25, 26, 27, 28, 29], // Path 5
+  6: [30, 31, 32, 33, 34, 35], // Path 6
+  7: [36, 37, 38, 39, 40, 41], // Path 7
+}
+
+function Game({ user, onGameEnd, isAdmin }) {
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [answer, setAnswer] = useState('')
+  const [score, setScore] = useState(0)
+  const [feedback, setFeedback] = useState('')
+  const [isFinished, setIsFinished] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [totalScore, setTotalScore] = useState(0)
+  const [showModal, setShowModal] = useState(false)
+  const [answeredQuestions, setAnsweredQuestions] = useState(new Set())
+  const [wrongImage, setWrongImage] = useState('')
+  const [selectedPath, setSelectedPath] = useState(null)
+  const [lockedPaths, setLockedPaths] = useState([])
+  const [showPathSelection, setShowPathSelection] = useState(true)
+  const [questions, setQuestions] = useState([])
+  const [allAnsweredQuestions, setAllAnsweredQuestions] = useState(new Set())
+  const [questionScores, setQuestionScores] = useState({})
+  const [pathUsers, setPathUsers] = useState({})
+  const [pathScores, setPathScores] = useState({})
+  const [allUserQuestionScores, setAllUserQuestionScores] = useState({})
+
+  const wrongImages = [
+    'https://xpclass.vn/leaderboard/wrong_image/vince%20mc.gif',
+    'https://xpclass.vn/leaderboard/wrong_image/nick-confused.gif',
+    'https://xpclass.vn/leaderboard/wrong_image/minus6.png',
+    'https://xpclass.vn/leaderboard/wrong_image/minus2.gif',
+    'https://xpclass.vn/leaderboard/wrong_image/drake.jpg'
+  ]
+
+  useEffect(() => {
+    fetchTotalScore()
+    fetchAnsweredQuestions()
+    fetchLockedPaths()
+    checkUserPath()
+    if (isAdmin) {
+      fetchAllPathScores()
+    }
+
+    // Subscribe to real-time changes in path selections
+    const pathSubscription = supabase
+      .channel('path_changes')
+      .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'user_paths' },
+        (payload) => {
+          console.log('Path selection detected:', payload.new)
+          // Update locked paths when someone selects a path
+          setLockedPaths(prev => {
+            const newLocked = [...prev]
+            if (!newLocked.includes(payload.new.path_number)) {
+              newLocked.push(payload.new.path_number)
+            }
+            console.log('Updated locked paths:', newLocked)
+            return newLocked
+          })
+        }
+      )
+      .subscribe((status) => {
+        console.log('Path subscription status:', status)
+      })
+
+    // Subscribe to real-time answer updates
+    const answerSubscription = supabase
+      .channel('answer_changes')
+      .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'user_answers' },
+        (payload) => {
+          console.log('Answer detected:', payload.new)
+          // Update all answered questions when anyone answers
+          setAllAnsweredQuestions(prev => new Set([...prev, payload.new.question_index]))
+
+          // Update my answered questions if it's my answer
+          if (payload.new.user_id === user.id) {
+            setAnsweredQuestions(prev => new Set([...prev, payload.new.question_index]))
+          }
+        }
+      )
+      .subscribe((status) => {
+        console.log('Answer subscription status:', status)
+      })
+
+    // Subscribe to score updates for admin
+    let scoreSubscription = null
+    if (isAdmin) {
+      scoreSubscription = supabase
+        .channel('score_changes')
+        .on('postgres_changes',
+          { event: 'INSERT', schema: 'public', table: 'scores' },
+          () => {
+            fetchAllPathScores()
+          }
+        )
+        .subscribe()
+    }
+
+    return () => {
+      pathSubscription.unsubscribe()
+      answerSubscription.unsubscribe()
+      if (scoreSubscription) {
+        scoreSubscription.unsubscribe()
+      }
+    }
+  }, [])
+
+  const checkUserPath = async () => {
+    try {
+      // Admin doesn't need to select a path
+      if (isAdmin) {
+        setShowPathSelection(false)
+        setSelectedPath(0) // Set to 0 to indicate admin mode
+        loadQuestionsForPath(0)
+        return
+      }
+
+      const { data, error } = await supabase
+        .from('user_paths')
+        .select('path_number')
+        .eq('user_id', user.id)
+        .maybeSingle()
+
+      if (data?.path_number) {
+        setSelectedPath(data.path_number)
+        setShowPathSelection(false)
+        loadQuestionsForPath(data.path_number)
+      }
+    } catch (error) {
+      console.error('Error checking user path:', error)
+    }
+  }
+
+  const fetchLockedPaths = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('user_paths')
+        .select('path_number, user_id, display_name')
+
+      if (error) {
+        console.error('Error fetching locked paths:', error)
+      } else if (data) {
+        const locked = data
+          .filter(item => item.user_id !== user.id)
+          .map(item => item.path_number)
+        setLockedPaths(locked)
+
+        // Fetch user details including avatars
+        const userIds = data.map(item => item.user_id)
+        if (userIds.length > 0) {
+          const { data: usersData } = await supabase
+            .from('users')
+            .select('id, display_name, avatar')
+            .in('id', userIds)
+
+          if (usersData) {
+            // Map path number to user info
+            const pathToUser = {}
+            data.forEach(pathData => {
+              const userData = usersData.find(u => u.id === pathData.user_id)
+              if (userData) {
+                pathToUser[pathData.path_number] = {
+                  display_name: userData.display_name || pathData.display_name,
+                  avatar: userData.avatar,
+                  user_id: pathData.user_id
+                }
+              }
+            })
+            setPathUsers(pathToUser)
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  const loadQuestionsForPath = (pathNumber) => {
+    // Don't filter questions - show all questions from all paths
+    setQuestions(allQuestions)
+  }
+
+  const fetchAllPathScores = async () => {
+    try {
+      const { data: userPaths } = await supabase
+        .from('user_paths')
+        .select('user_id, path_number')
+
+      if (userPaths) {
+        const scores = {}
+        for (const pathData of userPaths) {
+          const { data: scoreData } = await supabase
+            .from('scores')
+            .select('score')
+            .eq('user_id', pathData.user_id)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .maybeSingle()
+
+          if (scoreData) {
+            scores[pathData.path_number] = scoreData.score
+          }
+        }
+        setPathScores(scores)
+      }
+
+      // Fetch all user question scores for admin
+      const { data: allAnswers } = await supabase
+        .from('user_answers')
+        .select('user_id, question_index, points')
+
+      if (allAnswers) {
+        const userScores = {}
+        allAnswers.forEach(ans => {
+          if (!userScores[ans.user_id]) {
+            userScores[ans.user_id] = {}
+          }
+          userScores[ans.user_id][ans.question_index] = ans.points || 10
+        })
+        setAllUserQuestionScores(userScores)
+      }
+    } catch (error) {
+      console.error('Error fetching path scores:', error)
+    }
+  }
+
+  const selectPath = async (pathNumber) => {
+    try {
+      // Get display name
+      const { data: userData } = await supabase
+        .from('users')
+        .select('display_name')
+        .eq('id', user.id)
+        .single()
+
+      const displayName = userData?.display_name || user.email
+
+      // Save path selection
+      const { error } = await supabase
+        .from('user_paths')
+        .insert([{
+          user_id: user.id,
+          display_name: displayName,
+          path_number: pathNumber
+        }])
+
+      if (error) {
+        console.error('Error selecting path:', error)
+        alert('Failed to select path. It might be already taken.')
+        fetchLockedPaths() // Refresh locked paths
+        return
+      }
+
+      setSelectedPath(pathNumber)
+      setShowPathSelection(false)
+      loadQuestionsForPath(pathNumber)
+      fetchLockedPaths() // Refresh to show this path is now locked
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Failed to select path')
+    }
+  }
+
+  const fetchAnsweredQuestions = async () => {
+    try {
+      // Fetch ALL answered questions from ALL users to show progress
+      const { data, error } = await supabase
+        .from('user_answers')
+        .select('question_index, user_id, points')
+
+      console.log('Fetched all answers:', data)
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching answered questions:', error)
+      } else if (data && data.length > 0) {
+        // My answered questions
+        const myAnswered = new Set(
+          data.filter(item => item.user_id === user.id).map(item => item.question_index)
+        )
+        setAnsweredQuestions(myAnswered)
+
+        // Store points for my answers
+        const scores = {}
+        data.filter(item => item.user_id === user.id).forEach(item => {
+          scores[item.question_index] = item.points || 10 // Default to 10 if no points stored
+        })
+        setQuestionScores(scores)
+        console.log('My answered questions with scores:', scores)
+
+        // All answered questions (from everyone)
+        const allAnswered = new Set(data.map(item => item.question_index))
+        setAllAnsweredQuestions(allAnswered)
+      } else {
+        // No data yet, initialize empty sets
+        setAnsweredQuestions(new Set())
+        setAllAnsweredQuestions(new Set())
+        setQuestionScores({})
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  const fetchTotalScore = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('scores')
+        .select('score')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+
+      if (error) {
+        console.error('Error fetching total score:', error)
+      } else {
+        setTotalScore(data?.score || 0)
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  const handleSkip = async () => {
+    const points = 5
+    const isBonus = questions[currentQuestion].isBonus
+
+    // Get display name
+    const { data: userData } = await supabase
+      .from('users')
+      .select('display_name')
+      .eq('id', user.id)
+      .single()
+
+    const displayName = userData?.display_name || user.email
+
+    // Save skipped answer - mark as skipped, not correct
+    try {
+      await supabase
+        .from('user_answers')
+        .insert([{
+          user_id: user.id,
+          display_name: displayName,
+          question_index: currentQuestion,
+          is_correct: false,
+          is_skipped: true,
+          points: points
+        }])
+
+      setAnsweredQuestions(prev => new Set([...prev, currentQuestion]))
+      setQuestionScores(prev => ({
+        ...prev,
+        [currentQuestion]: points
+      }))
+
+      const newScore = score + points
+      setScore(newScore)
+      setFeedback('⏭️ Skipped! +5 points')
+
+      await saveScore(points, displayName)
+      setTotalScore(totalScore + points)
+
+      setTimeout(() => {
+        setShowModal(false)
+        setAnswer('')
+        setFeedback('')
+      }, 1500)
+    } catch (error) {
+      console.error('Error saving skip:', error)
+    }
+  }
+
+  const handleSubmit = async () => {
+    const correctAnswer = questions[currentQuestion].answer.toLowerCase()
+    const userAnswer = answer.trim().toLowerCase()
+    const isCorrect = userAnswer === correctAnswer
+    const isBonus = questions[currentQuestion].isBonus
+
+    // Get display name
+    const { data: userData } = await supabase
+      .from('users')
+      .select('display_name')
+      .eq('id', user.id)
+      .single()
+
+    const displayName = userData?.display_name || user.email
+
+    // Save answer to database only if correct
+    if (isCorrect) {
+      // Calculate points based on racing bonus
+      let points = 10 // Base points for regular questions
+      let racingBonus = 0
+      let feedbackMessage = '✅ Correct!'
+
+      if (isBonus) {
+        // Bonus question also has racing bonus
+        // Find which question number this is within the path (should be index 5, the bonus)
+        const pathQuestionIndices = questionPaths[selectedPath]
+        const localQuestionIndex = pathQuestionIndices.indexOf(currentQuestion)
+
+        // Count how many teams have already answered the bonus question (including skips for position)
+        const { data: allAnswers } = await supabase
+          .from('user_answers')
+          .select('user_id, question_index, is_correct, is_skipped')
+
+        const usersWhoAnsweredBonus = new Set()
+
+        if (allAnswers) {
+          // Get all user paths to determine question positions
+          const { data: userPaths } = await supabase
+            .from('user_paths')
+            .select('user_id, path_number')
+
+          if (userPaths) {
+            allAnswers.forEach(ans => {
+              const userPath = userPaths.find(up => up.user_id === ans.user_id)
+              if (userPath) {
+                const userPathIndices = questionPaths[userPath.path_number]
+                const userLocalIndex = userPathIndices.indexOf(ans.question_index)
+                // Check if this answer is for the bonus question (index 5) - count ALL answers (correct and skipped)
+                if (userLocalIndex === 5 && ans.user_id !== user.id) {
+                  usersWhoAnsweredBonus.add(ans.user_id)
+                }
+              }
+            })
+          }
+        }
+
+        // Calculate racing bonus: 20 points for 1st, 18 for 2nd, 16 for 3rd, etc.
+        // Position includes all who answered (correct or skipped)
+        const position = usersWhoAnsweredBonus.size + 1
+        racingBonus = Math.max(20 - (position - 1) * 2, 0) // 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0
+
+        points = racingBonus
+        const positionSuffix = position === 1 ? 'st' : position === 2 ? 'nd' : position === 3 ? 'rd' : 'th'
+        feedbackMessage = `🌟 Correct! BONUS +${racingBonus} points (${position}${positionSuffix} to answer)!`
+      } else {
+        // For regular questions, calculate racing bonus
+        // Find which question number this is within the path (1-5)
+        const pathQuestionIndices = questionPaths[selectedPath]
+        const localQuestionIndex = pathQuestionIndices.indexOf(currentQuestion)
+
+        if (localQuestionIndex >= 0 && localQuestionIndex < 5) {
+          const questionNumber = localQuestionIndex + 1 // 1-5
+
+          // Count how many teams have already answered this question number (including skips for position)
+          const { data: allAnswers } = await supabase
+            .from('user_answers')
+            .select('user_id, question_index, is_correct, is_skipped')
+
+          // Group answers by user and find which users answered this question position
+          const usersWhoAnsweredThisPosition = new Set()
+
+          if (allAnswers) {
+            // Get all user paths to determine question positions
+            const { data: userPaths } = await supabase
+              .from('user_paths')
+              .select('user_id, path_number')
+
+            if (userPaths) {
+              allAnswers.forEach(ans => {
+                const userPath = userPaths.find(up => up.user_id === ans.user_id)
+                if (userPath) {
+                  const userPathIndices = questionPaths[userPath.path_number]
+                  const userLocalIndex = userPathIndices.indexOf(ans.question_index)
+                  // Check if this answer is for the same question position - count ALL answers (correct and skipped)
+                  if (userLocalIndex === localQuestionIndex && ans.user_id !== user.id) {
+                    usersWhoAnsweredThisPosition.add(ans.user_id)
+                  }
+                }
+              })
+            }
+          }
+
+          // Calculate racing bonus: 10 points for 1st, 9 for 2nd, 8 for 3rd, etc.
+          // Position includes all who answered (correct or skipped)
+          const position = usersWhoAnsweredThisPosition.size + 1 // +1 because this user is answering now
+          racingBonus = Math.max(10 - position + 1, 0) // 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+
+          if (racingBonus > 0) {
+            points += racingBonus
+            const positionSuffix = position === 1 ? 'st' : position === 2 ? 'nd' : position === 3 ? 'rd' : 'th'
+            feedbackMessage = `✅ Correct! +10 base + ${racingBonus} racing bonus (${position}${positionSuffix} to answer Q${questionNumber})!`
+          }
+        }
+      }
+
+      try {
+        console.log('Saving answer for question index:', currentQuestion, 'with points:', points)
+        const { data, error } = await supabase
+          .from('user_answers')
+          .insert([{
+            user_id: user.id,
+            display_name: displayName,
+            question_index: currentQuestion,
+            is_correct: true,
+            points: points
+          }])
+          .select()
+
+        if (error) {
+          console.error('Error saving answer:', error)
+        } else {
+          console.log('Answer saved successfully:', data)
+        }
+      } catch (error) {
+        console.error('Error saving answer:', error)
+      }
+
+      // Mark question as answered only if correct
+      setAnsweredQuestions(prev => new Set([...prev, currentQuestion]))
+
+      // Store the points earned for this question
+      setQuestionScores(prev => ({
+        ...prev,
+        [currentQuestion]: points
+      }))
+
+      const newScore = score + points
+      setScore(newScore)
+      setFeedback(feedbackMessage)
+
+      // Save score immediately
+      await saveScore(points, displayName)
+
+      // Update total score display
+      setTotalScore(totalScore + points)
+    } else {
+      const wrongMessages = [
+        "Sai rồi mom",
+        "haha, gà",
+        "Bruhhhhhh",
+        "Sai bét",
+        "Gì vậy tròi"
+      ]
+      const randomMessage = wrongMessages[Math.floor(Math.random() * wrongMessages.length)]
+      const randomImage = wrongImages[Math.floor(Math.random() * wrongImages.length)]
+
+      setFeedback(`❌ ${randomMessage}`)
+      setWrongImage(randomImage)
+      setAnswer('')
+
+      // Clear feedback after 2 seconds but keep modal open
+      setTimeout(() => {
+        setFeedback('')
+        setWrongImage('')
+      }, 2000)
+      return
+    }
+
+    // Only close modal and clear if correct
+    setTimeout(() => {
+      setShowModal(false)
+      setAnswer('')
+      setFeedback('')
+    }, 1500)
+  }
+
+  const saveScore = async (points, displayName) => {
+    try {
+      const newTotal = totalScore + points
+
+      const { error } = await supabase
+        .from('scores')
+        .insert([{
+          user_id: user.id,
+          player_name: displayName,
+          score: newTotal
+        }])
+
+      if (error) console.error('Error inserting score:', error)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  const finishGame = async () => {
+    setIsFinished(true)
+    setIsSubmitting(false)
+  }
+
+  if (showPathSelection) {
+    return (
+      <div className="game">
+        <div className="path-selection">
+          <h2>Choose Your Path</h2>
+          <p>Select one of the 7 paths. Once chosen, it will be locked for other players!</p>
+          <div className="path-grid">
+            {[1, 2, 3, 4, 5, 6, 7].map(pathNum => (
+              <button
+                key={pathNum}
+                onClick={() => selectPath(pathNum)}
+                disabled={lockedPaths.includes(pathNum)}
+                className={`path-btn ${lockedPaths.includes(pathNum) ? 'locked' : ''}`}
+              >
+                <div className="path-number">Path {pathNum}</div>
+                {lockedPaths.includes(pathNum) && <div className="lock-icon">🔒 Locked</div>}
+                {!lockedPaths.includes(pathNum) && <div className="available">✓ Available</div>}
+              </button>
+            ))}
+          </div>
+          <button onClick={onGameEnd} className="back-to-menu-btn">Back to Menu</button>
+        </div>
+      </div>
+    )
+  }
+
+  if (isFinished) {
+    return (
+      <div className="game-over">
+        <h2>Game Over!</h2>
+        <p className="final-score">Final Score: {score + (answer.trim().toLowerCase() === questions[currentQuestion - 1]?.answer.toLowerCase() ? 10 : 0)}/{questions.length * 10}</p>
+        <p>{feedback}</p>
+        <button onClick={onGameEnd} disabled={isSubmitting}>
+          Back to Menu
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="game">
+      <div className="score-board">
+        <span>
+          {isAdmin ? (
+            <strong style={{ fontSize: '1.3rem', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>Admin View</strong>
+          ) : (
+            <><strong style={{ fontSize: '1.3rem', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>Path {selectedPath}</strong> | Total Score: {totalScore}</>
+          )}
+        </span>
+        <button onClick={onGameEnd} className="back-to-menu-btn">Back to Menu</button>
+      </div>
+
+      <div className="all-paths-container">
+        {[1, 2, 3, 4, 5, 6, 7].map(pathNum => {
+          const pathQuestionIndices = questionPaths[pathNum]
+          const isMyPath = pathNum === selectedPath
+
+          const pathUser = pathUsers[pathNum]
+
+          return (
+            <div key={pathNum} className="path-row">
+              <div className={`path-label ${isMyPath ? 'my-path-label' : ''}`} style={isMyPath ? { border: '3px solid #c44569', borderRadius: '10px', padding: '0.5rem 0.5rem 0.5rem 0', backgroundColor: 'rgba(255, 107, 157, 0.15)', boxSizing: 'border-box', width: '150px' } : {}}>
+                {pathUser && pathUser.avatar && (
+                  <img src={pathUser.avatar} alt={pathUser.display_name} className="path-avatar" />
+                )}
+                <div className="path-label-text">
+                  Path {pathNum}
+                  {isMyPath && <div className="your-path-badge">Your Path</div>}
+                  {isAdmin && pathScores[pathNum] !== undefined && (
+                    <div style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.25rem' }}>
+                      Score: {pathScores[pathNum]}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className={`path-section ${isMyPath ? 'my-path' : ''}`}>
+                <div className="question-grid-small">
+                {pathQuestionIndices.map((globalIndex, localIndex) => {
+                  const q = allQuestions[globalIndex]
+                  const isBonus = q.isBonus
+
+                  // Calculate if bonus is unlocked for this path
+                  const pathRegularIndices = pathQuestionIndices.filter(i => !allQuestions[i].isBonus)
+                  const pathRegularAnswered = pathRegularIndices.filter(i => answeredQuestions.has(i)).length
+                  const bonusUnlocked = pathRegularAnswered >= pathRegularIndices.length
+
+                  const isAnsweredByMe = answeredQuestions.has(globalIndex)
+                  const isAnsweredByAnyone = allAnsweredQuestions.has(globalIndex)
+
+                  // Check if this question is locked based on sequential order
+                  let isLocked = false
+                  if (isBonus) {
+                    // Bonus is locked until all 5 regular questions are answered BY ME
+                    // OR if any other team has answered it (then I can see it but not answer)
+                    isLocked = !bonusUnlocked && !isAnsweredByAnyone
+                  } else {
+                    // Regular questions must be answered in order
+                    // Question is locked if the previous question hasn't been answered by ME
+                    // AND hasn't been answered by anyone else
+                    if (localIndex > 0) {
+                      const previousQuestionIndex = pathQuestionIndices[localIndex - 1]
+                      const previousAnsweredByMe = answeredQuestions.has(previousQuestionIndex)
+
+                      // Check if previous question answered by anyone
+                      const previousAnsweredByAnyone = allAnsweredQuestions.has(previousQuestionIndex)
+
+                      // Lock only if I haven't answered the previous AND nobody else has either
+                      isLocked = !previousAnsweredByMe && !previousAnsweredByAnyone
+                    }
+                  }
+
+                  // Can click if it's my path and not locked (even if answered, to view the question)
+                  // OR if user is admin (can view all questions, even locked ones)
+                  const canClick = (isMyPath && !isLocked) || isAdmin
+
+                  // Determine what to display on the button
+                  let buttonContent = null
+
+                  if (isLocked) {
+                    // Locked question - show star for bonus, lock for regular
+                    buttonContent = isBonus ? <FaStar className="star-icon" /> : '🔒'
+                  } else if (isAnsweredByMe) {
+                    // Answered by me - show the points I earned
+                    const earnedPoints = questionScores[globalIndex]
+                    if (isBonus && earnedPoints) {
+                      buttonContent = <span>+{earnedPoints}</span>
+                    } else {
+                      buttonContent = earnedPoints ? `+${earnedPoints}` : '✓'
+                    }
+                  } else if (isAnsweredByAnyone) {
+                    // For admin, show points earned by the team for this path
+                    if (isAdmin && pathUser?.user_id && allUserQuestionScores[pathUser.user_id]?.[globalIndex]) {
+                      const pathUserPoints = allUserQuestionScores[pathUser.user_id][globalIndex]
+                      buttonContent = `+${pathUserPoints}`
+                    } else {
+                      // Answered by someone else - show checkmark or star
+                      buttonContent = isBonus ? <FaStar className="star-icon" /> : '✓'
+                    }
+                  } else {
+                    // Not answered yet - show star for bonus, lock for regular
+                    buttonContent = isBonus ? <FaStar className="star-icon" /> : '🔒'
+                  }
+
+                  return (
+                    <button
+                      key={globalIndex}
+                      onClick={() => {
+                        if (canClick) {
+                          setCurrentQuestion(globalIndex)
+                          setShowModal(true)
+                        }
+                      }}
+                      className={`question-btn-small
+                        ${isAnsweredByMe ? 'answered-by-me' : ''}
+                        ${isAnsweredByAnyone && !isAnsweredByMe ? 'answered-by-other' : ''}
+                        ${isBonus ? 'bonus-question' : ''}
+                        ${isLocked ? 'locked-question' : ''}
+                        ${!isMyPath ? 'other-path' : ''}`}
+                      disabled={!canClick}
+                      title={`Q${localIndex + 1}${isAnsweredByMe ? ` - Earned ${questionScores[globalIndex] || 0} pts` : ''}`}
+                    >
+                      {buttonContent}
+                    </button>
+                  )
+                })}
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-modal" onClick={() => setShowModal(false)}>×</button>
+            <div className={`question-card ${questions[currentQuestion].isBonus ? 'bonus-card' : ''}`} data-path={(() => {
+              // Find which path this question belongs to
+              for (const [pathNum, indices] of Object.entries(questionPaths)) {
+                if (indices.includes(currentQuestion)) {
+                  return pathNum;
+                }
+              }
+              return '1';
+            })()}>
+              {questions[currentQuestion].isBonus && (
+                <div className="bonus-badge">🌟 BONUS QUESTION - 20 Points! 🌟</div>
+              )}
+              <h2>{questions[currentQuestion].question}</h2>
+
+              {questions[currentQuestion].image && (
+                <img
+                  src={questions[currentQuestion].image}
+                  alt="Question"
+                  style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '20px' }}
+                />
+              )}
+
+              {questions[currentQuestion].audio && (
+                <audio controls style={{ width: '100%', marginBottom: '20px' }}>
+                  <source src={questions[currentQuestion].audio} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+              )}
+
+              {isAdmin ? (
+                <div className="already-answered">
+                  <p className="answered-message">👁️ Admin View - Read Only</p>
+                  <p style={{ color: 'white', marginTop: '1rem' }}>You are viewing this question as an admin. You cannot answer or skip questions for other teams.</p>
+                </div>
+              ) : answeredQuestions.has(currentQuestion) ? (
+                <div className="already-answered">
+                  <p className="answered-message">✅ You already answered this question!</p>
+                  <p className="earned-points">You earned: +{questionScores[currentQuestion] || 10} points</p>
+                </div>
+              ) : (
+                <>
+                  <input
+                    type="text"
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && answer.trim() && handleSubmit()}
+                    placeholder="Type your answer..."
+                    autoFocus
+                    disabled={feedback !== ''}
+                  />
+                  <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', justifyContent: 'space-between' }}>
+                    <button onClick={handleSubmit} disabled={!answer.trim() || feedback !== ''}>
+                      Submit Answer
+                    </button>
+                    <button onClick={handleSkip} disabled={feedback !== ''} style={{ opacity: 0.8 }}>
+                      Skip (+5 pts)
+                    </button>
+                  </div>
+                  {feedback && <p className="feedback">{feedback}</p>}
+                </>
+              )}
+            </div>
+          </div>
+
+          {wrongImage && (
+            <div className="wrong-image-overlay">
+              <img
+                src={wrongImage}
+                alt="Wrong answer"
+              />
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default Game
