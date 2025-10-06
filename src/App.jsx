@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { supabase } from './supabaseClient'
 import Auth from './components/Auth'
 import Game from './components/Game'
 import Leaderboard from './components/Leaderboard'
 import Round2 from './components/Round2'
+import Particles from '@tsparticles/react'
+import { loadSlim } from '@tsparticles/slim'
 import './App.css'
 
 function App() {
@@ -13,6 +15,10 @@ function App() {
   const [displayName, setDisplayName] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [round2Open, setRound2Open] = useState(false)
+
+  const particlesInit = useCallback(async (engine) => {
+    await loadSlim(engine)
+  }, [])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -131,6 +137,108 @@ function App() {
 
   return (
     <div className="app">
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          fullScreen: {
+            zIndex: 1
+          },
+          particles: {
+            color: {
+              value: ["#FFFFFF", "#FFd700"]
+            },
+            move: {
+              direction: "bottom",
+              enable: true,
+              outModes: {
+                default: "out"
+              },
+              size: true,
+              speed: {
+                min: 1,
+                max: 3
+              }
+            },
+            number: {
+              value: 500,
+              density: {
+                enable: true,
+                area: 800
+              }
+            },
+            opacity: {
+              value: 1,
+              animation: {
+                enable: false,
+                startValue: "max",
+                destroy: "min",
+                speed: 0.3,
+                sync: true
+              }
+            },
+            rotate: {
+              value: {
+                min: 0,
+                max: 360
+              },
+              direction: "random",
+              move: true,
+              animation: {
+                enable: true,
+                speed: 60
+              }
+            },
+            tilt: {
+              direction: "random",
+              enable: true,
+              move: true,
+              value: {
+                min: 0,
+                max: 360
+              },
+              animation: {
+                enable: true,
+                speed: 60
+              }
+            },
+            shape: {
+              type: ["circle", "square"],
+              options: {}
+            },
+            size: {
+              value: {
+                min: 2,
+                max: 4
+              }
+            },
+            roll: {
+              darken: {
+                enable: true,
+                value: 30
+              },
+              enlighten: {
+                enable: true,
+                value: 30
+              },
+              enable: true,
+              speed: {
+                min: 15,
+                max: 25
+              }
+            },
+            wobble: {
+              distance: 30,
+              enable: true,
+              move: true,
+              speed: {
+                min: -15,
+                max: 15
+              }
+            }
+          }
+        }}
+      />
       <div className="header">
         <h1>💖 Love Trivia</h1>
         <div className="user-info">

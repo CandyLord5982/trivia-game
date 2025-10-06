@@ -7,6 +7,17 @@
 
 .app {
   min-height: auto;
+  position: relative;
+}
+
+#tsparticles {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999 !important;
+  pointer-events: none;
 }
 
 .app h1 {
