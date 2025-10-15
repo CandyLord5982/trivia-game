@@ -1,63 +1,64 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
 import { FaStar } from 'react-icons/fa'
+import NumberPicker from './NumberPicker'
 
 // Divide questions into 7 paths - each path has 6 questions (5 regular + 1 bonus)
 const allQuestions = [
   // Path 1 (0-5)
-  { question: 'What is the capital of France?', answer: 'paris', type: 'text', image: 'https://www.studyphim.vn/system/movies/9599/thumbnails/original/Kung%20Fu%20Panda%204%20(2024).jpeg', audio: 'https://www.studyphim.vn/system/movies/9599/thumbnails/original/Kung%20Fu%20Panda%204%20(2024).jpeg' },
-  { question: 'What is 5 + 7?', answer: '12', type: 'text' },
-  { question: 'What color is the sky?', answer: 'blue', type: 'text' },
-  { question: 'How many continents are there?', answer: '7', type: 'text' },
-  { question: 'What is the largest planet in our solar system?', answer: 'jupiter', type: 'text' },
+  { question: 'What is the capital of France?', answer: 'paris', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink1.png' },
+  { question: 'What is 5 + 7?', answer: '12', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink2.png' },
+  { question: 'What color is the sky?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/pink3.png' },
+  { question: 'How many continents are there?', answer: '7', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink4.png' },
+  { question: 'What is the largest planet in our solar system?', answer: 'jupiter', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink5.png' },
   { question: 'BONUS: What is the chemical symbol for gold?', answer: 'au', type: 'text', isBonus: true },
 
   // Path 2 (6-11)
-  { question: 'What year did World War 2 end?', answer: '1945', type: 'text' },
-  { question: 'What is the square root of 64?', answer: '8', type: 'text' },
-  { question: 'What is the capital of Japan?', answer: 'tokyo', type: 'text' },
-  { question: 'How many sides does a hexagon have?', answer: '6', type: 'text' },
-  { question: 'What is the freezing point of water in Celsius?', answer: '0', type: 'text' },
+  { question: 'What year did World War 2 end?', answer: '1945', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue1.png' },
+  { question: 'What is the square root of 64?', answer: '8', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue2.png' },
+  { question: 'What is the capital of Japan?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/blue3.png' },
+  { question: 'How many sides does a hexagon have?', answer: '6', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue4.png' },
+  { question: 'What is the freezing point of water in Celsius?', answer: '0', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue5.png' },
   { question: 'BONUS: Who painted the Mona Lisa?', answer: 'da vinci', type: 'text', isBonus: true },
 
   // Path 3 (12-17)
-  { question: 'What is the smallest prime number?', answer: '2', type: 'text' },
-  { question: 'How many hours are in a day?', answer: '24', type: 'text' },
-  { question: 'What is 10 x 10?', answer: '100', type: 'text' },
-  { question: 'What planet is known as the Red Planet?', answer: 'mars', type: 'text' },
-  { question: 'How many legs does a spider have?', answer: '8', type: 'text' },
+  { question: 'What is the smallest prime number?', answer: '2', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green1.png' },
+  { question: 'What is the keyword?', answer: '24', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green2.png' },
+  { question: 'What is code?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/green3.png' },
+  { question: 'What is the title?', answer: 'mars', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green4.png' },
+  { question: 'How many legs does a spider have?', answer: '8', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green5.png' },
   { question: 'BONUS: What is the speed of light in km/s?', answer: '300000', type: 'text', isBonus: true },
 
   // Path 4 (18-23)
-  { question: 'What is the capital of Italy?', answer: 'rome', type: 'text' },
-  { question: 'How many days in a leap year?', answer: '366', type: 'text' },
-  { question: 'What is 15 + 25?', answer: '40', type: 'text' },
-  { question: 'What gas do plants absorb?', answer: 'co2', type: 'text' },
-  { question: 'How many sides does a triangle have?', answer: '3', type: 'text' },
+  { question: 'What is the capital of Italy?', answer: 'rome', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple1.png' },
+  { question: 'How many days in a leap year?', answer: '366', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple2.png' },
+  { question: 'What is 15 + 25?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/purple3.png' },
+  { question: 'What gas do plants absorb?', answer: 'co2', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple4.png' },
+  { question: 'How many sides does a triangle have?', answer: '3', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple5.png' },
   { question: 'BONUS: What year was the internet invented?', answer: '1983', type: 'text', isBonus: true },
 
   // Path 5 (24-29)
-  { question: 'What is the capital of Spain?', answer: 'madrid', type: 'text' },
-  { question: 'How many minutes in an hour?', answer: '60', type: 'text' },
-  { question: 'What is 20 - 8?', answer: '12', type: 'text' },
-  { question: 'What is H2O?', answer: 'water', type: 'text' },
-  { question: 'How many colors in a rainbow?', answer: '7', type: 'text' },
+  { question: 'What is the capital of Spain?', answer: 'madrid', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown1.png' },
+  { question: 'How many minutes in an hour?', answer: '60', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown2.png' },
+  { question: 'What is 20 - 8?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/brown3.png' },
+  { question: 'What is H2O?', answer: 'water', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown4.png' },
+  { question: 'How many colors in a rainbow?', answer: '7', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown5.png' },
   { question: 'BONUS: What is the smallest country in the world?', answer: 'vatican', type: 'text', isBonus: true },
 
   // Path 6 (30-35)
-  { question: 'What is the capital of Germany?', answer: 'berlin', type: 'text' },
-  { question: 'How many sides does a square have?', answer: '4', type: 'text' },
-  { question: 'What is 9 x 9?', answer: '81', type: 'text' },
-  { question: 'What is the largest ocean?', answer: 'pacific', type: 'text' },
-  { question: 'How many months in a year?', answer: '12', type: 'text' },
+  { question: 'What is the capital of Germany?', answer: 'berlin', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal1.png'  },
+  { question: 'How many sides does a square have?', answer: '4', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal2.png' },
+  { question: 'What is 9 x 9?', answer: '102025', type: 'numberpicker', fields: 6 ,image: 'https://xpclass.vn/2010/display_on_site/teal3.png' },
+  { question: 'What is the largest ocean?', answer: 'pacific', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal4.png' },
+  { question: 'How many months in a year?', answer: '12', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal5.png' },
   { question: 'BONUS: What is the tallest mountain in the world?', answer: 'everest', type: 'text', isBonus: true },
 
   // Path 7 (36-41)
-  { question: 'What is the capital of England?', answer: 'london', type: 'text' },
-  { question: 'How many days in November?', answer: '30', type: 'text' },
-  { question: 'What is 50 / 5?', answer: '10', type: 'text' },
-  { question: 'What animal is known as the King of the Jungle?', answer: 'lion', type: 'text' },
-  { question: 'How many weeks in a year?', answer: '52', type: 'text' },
+  { question: 'What is the capital of England?', answer: 'london', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red1.png' },
+  { question: 'How many days in November?', answer: '30', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red2.png' },
+  { question: 'What is 50 / 5?', answer: '102025', type: 'numberpicker', fields: 6,image: 'https://xpclass.vn/2010/display_on_site/red3.png' },
+  { question: 'What animal is known as the King of the Jungle?', answer: 'lion', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red4.png' },
+  { question: 'How many weeks in a year?', answer: '52', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red5.png' },
   { question: 'BONUS: What is the currency of Japan?', answer: 'yen', type: 'text', isBonus: true },
 ]
 
@@ -440,9 +441,10 @@ function Game({ user, onGameEnd, isAdmin }) {
     }
   }
 
-  const handleSubmit = async () => {
-    const correctAnswer = questions[currentQuestion].answer.toLowerCase()
-    const userAnswer = answer.trim().toLowerCase()
+  const handleSubmitWithAnswer = async (submittedAnswer) => {
+    const correctAnswer = questions[currentQuestion].answer.toLowerCase().replace(/\s+/g, '')
+    const userAnswer = submittedAnswer.trim().toLowerCase().replace(/\s+/g, '')
+    console.log('Correct answer:', correctAnswer, 'User answer:', userAnswer, 'Match:', userAnswer === correctAnswer)
     const isCorrect = userAnswer === correctAnswer
     const isBonus = questions[currentQuestion].isBonus
 
@@ -624,6 +626,10 @@ function Game({ user, onGameEnd, isAdmin }) {
       setAnswer('')
       setFeedback('')
     }, 1500)
+  }
+
+  const handleSubmit = async () => {
+    handleSubmitWithAnswer(answer)
   }
 
   const saveScore = async (points, displayName) => {
@@ -866,23 +872,37 @@ function Game({ user, onGameEnd, isAdmin }) {
                 </div>
               ) : (
                 <>
-                  <input
-                    type="text"
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && answer.trim() && handleSubmit()}
-                    placeholder="Type your answer..."
-                    autoFocus
-                    disabled={feedback !== ''}
-                  />
-                  <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', justifyContent: 'space-between' }}>
-                    <button onClick={handleSubmit} disabled={!answer.trim() || feedback !== ''}>
-                      Submit Answer
-                    </button>
-                    <button onClick={handleSkip} disabled={feedback !== ''} style={{ opacity: 0.8 }}>
-                      Skip (+5 pts)
-                    </button>
-                  </div>
+                  {questions[currentQuestion].type === 'numberpicker' ? (
+                    <NumberPicker
+                      fields={questions[currentQuestion].fields}
+                      onSubmit={(values) => {
+                        const submittedAnswer = values.join('')
+                        setAnswer(submittedAnswer)
+                        handleSubmitWithAnswer(submittedAnswer)
+                      }}
+                      disabled={feedback !== ''}
+                    />
+                  ) : (
+                    <>
+                      <input
+                        type="text"
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && answer.trim() && handleSubmit()}
+                        placeholder="Type your answer..."
+                        autoFocus
+                        disabled={feedback !== ''}
+                      />
+                      <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', justifyContent: 'space-between' }}>
+                        <button onClick={handleSubmit} disabled={!answer.trim() || feedback !== ''}>
+                          Submit Answer
+                        </button>
+                        <button onClick={handleSkip} disabled={feedback !== ''} style={{ opacity: 0.8 }}>
+                          Skip (+5 pts)
+                        </button>
+                      </div>
+                    </>
+                  )}
                   {feedback && <p className="feedback">{feedback}</p>}
                 </>
               )}
