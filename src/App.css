@@ -840,9 +840,44 @@ button:disabled {
   text-align: right;
 }
 
+/* Path 1 - Pink (Prestige) */
+.path-row:nth-child(1) .path-label-text {
+  color: #ff6b9d;
+}
+
+/* Path 2 - Blue (Elegance) */
+.path-row:nth-child(2) .path-label-text {
+  color: #6b9dff;
+}
+
+/* Path 3 - Green (Charm) */
+.path-row:nth-child(3) .path-label-text {
+  color: #6bff9d;
+}
+
+/* Path 4 - Purple (Glamour) */
+.path-row:nth-child(4) .path-label-text {
+  color: #9d6bff;
+}
+
+/* Path 5 - Brown (Grace) */
+.path-row:nth-child(5) .path-label-text {
+  color: #a0522d;
+}
+
+/* Path 6 - Teal (Grandeur) */
+.path-row:nth-child(6) .path-label-text {
+  color: #6bffff;
+}
+
+/* Path 7 - Red (Vogue) */
+.path-row:nth-child(7) .path-label-text {
+  color: #ff3333;
+}
+
 .path-label.my-path-label .path-label-text {
-  color: #c44569;
   font-size: 1.2rem;
+  /* Color is inherited from path-specific rule above */
 }
 
 .path-avatar {
@@ -866,17 +901,93 @@ button:disabled {
 }
 
 .path-section {
-  background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(196, 69, 105, 0.1) 100%);
-  padding: 1rem 0 1rem 1.5rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
   border-radius: 15px;
-  border: 2px solid rgba(255, 107, 157, 0.2);
   flex: 1;
 }
 
-.path-section.my-path {
+/* Path 1 - Pink */
+.path-row:nth-child(1) .path-section {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(196, 69, 105, 0.1) 100%);
+  border: 2px solid rgba(255, 107, 157, 0.2);
+}
+
+.path-row:nth-child(1) .path-section.my-path {
   background: linear-gradient(135deg, rgba(255, 107, 157, 0.3) 0%, rgba(196, 69, 105, 0.3) 100%);
   border: 3px solid #ff6b9d;
   box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+}
+
+/* Path 2 - Blue */
+.path-row:nth-child(2) .path-section {
+  background: linear-gradient(135deg, rgba(107, 157, 255, 0.1) 0%, rgba(69, 105, 196, 0.1) 100%);
+  border: 2px solid rgba(107, 157, 255, 0.2);
+}
+
+.path-row:nth-child(2) .path-section.my-path {
+  background: linear-gradient(135deg, rgba(107, 157, 255, 0.3) 0%, rgba(69, 105, 196, 0.3) 100%);
+  border: 3px solid #6b9dff;
+  box-shadow: 0 4px 15px rgba(107, 157, 255, 0.3);
+}
+
+/* Path 3 - Green */
+.path-row:nth-child(3) .path-section {
+  background: linear-gradient(135deg, rgba(107, 255, 157, 0.1) 0%, rgba(69, 196, 105, 0.1) 100%);
+  border: 2px solid rgba(107, 255, 157, 0.2);
+}
+
+.path-row:nth-child(3) .path-section.my-path {
+  background: linear-gradient(135deg, rgba(107, 255, 157, 0.3) 0%, rgba(69, 196, 105, 0.3) 100%);
+  border: 3px solid #6bff9d;
+  box-shadow: 0 4px 15px rgba(107, 255, 157, 0.3);
+}
+
+/* Path 4 - Purple */
+.path-row:nth-child(4) .path-section {
+  background: linear-gradient(135deg, rgba(157, 107, 255, 0.1) 0%, rgba(105, 69, 196, 0.1) 100%);
+  border: 2px solid rgba(157, 107, 255, 0.2);
+}
+
+.path-row:nth-child(4) .path-section.my-path {
+  background: linear-gradient(135deg, rgba(157, 107, 255, 0.3) 0%, rgba(105, 69, 196, 0.3) 100%);
+  border: 3px solid #9d6bff;
+  box-shadow: 0 4px 15px rgba(157, 107, 255, 0.3);
+}
+
+/* Path 5 - Brown */
+.path-row:nth-child(5) .path-section {
+  background: linear-gradient(135deg, rgba(160, 82, 45, 0.1) 0%, rgba(107, 52, 16, 0.1) 100%);
+  border: 2px solid rgba(160, 82, 45, 0.2);
+}
+
+.path-row:nth-child(5) .path-section.my-path {
+  background: linear-gradient(135deg, rgba(160, 82, 45, 0.3) 0%, rgba(107, 52, 16, 0.3) 100%);
+  border: 3px solid #a0522d;
+  box-shadow: 0 4px 15px rgba(160, 82, 45, 0.3);
+}
+
+/* Path 6 - Teal */
+.path-row:nth-child(6) .path-section {
+  background: linear-gradient(135deg, rgba(107, 255, 255, 0.1) 0%, rgba(69, 196, 196, 0.1) 100%);
+  border: 2px solid rgba(107, 255, 255, 0.2);
+}
+
+.path-row:nth-child(6) .path-section.my-path {
+  background: linear-gradient(135deg, rgba(107, 255, 255, 0.3) 0%, rgba(69, 196, 196, 0.3) 100%);
+  border: 3px solid #6bffff;
+  box-shadow: 0 4px 15px rgba(107, 255, 255, 0.3);
+}
+
+/* Path 7 - Red */
+.path-row:nth-child(7) .path-section {
+  background: linear-gradient(135deg, rgba(255, 51, 51, 0.1) 0%, rgba(230, 0, 0, 0.1) 100%);
+  border: 2px solid rgba(255, 51, 51, 0.2);
+}
+
+.path-row:nth-child(7) .path-section.my-path {
+  background: linear-gradient(135deg, rgba(255, 51, 51, 0.3) 0%, rgba(230, 0, 0, 0.3) 100%);
+  border: 3px solid #ff3333;
+  box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
 }
 
 .question-grid-small {

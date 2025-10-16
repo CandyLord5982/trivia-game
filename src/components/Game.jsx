@@ -6,59 +6,59 @@ import NumberPicker from './NumberPicker'
 // Divide questions into 7 paths - each path has 6 questions (5 regular + 1 bonus)
 const allQuestions = [
   // Path 1 (0-5)
-  { question: 'What is the capital of France?', answer: 'paris', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink1.png' },
-  { question: 'What is 5 + 7?', answer: '12', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink2.png' },
-  { question: 'What color is the sky?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/pink3.png' },
-  { question: 'How many continents are there?', answer: '7', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink4.png' },
-  { question: 'What is the largest planet in our solar system?', answer: 'jupiter', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink5.png' },
-  { question: 'BONUS: What is the chemical symbol for gold?', answer: 'au', type: 'text', isBonus: true },
+  { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink1.png' },
+  { question: 'What is the keyword?', answer: 'đảm đang', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink2.png' },
+  { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink3.png' },
+  { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink4.png' },
+  { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink5.png' },
+  { question: 'BONUS: What is the chemical symbol for gold?', answer: 'ngọt ngào', type: 'text', isBonus: true },
 
   // Path 2 (6-11)
-  { question: 'What year did World War 2 end?', answer: '1945', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue1.png' },
-  { question: 'What is the square root of 64?', answer: '8', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue2.png' },
-  { question: 'What is the capital of Japan?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/blue3.png' },
-  { question: 'How many sides does a hexagon have?', answer: '6', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue4.png' },
-  { question: 'What is the freezing point of water in Celsius?', answer: '0', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue5.png' },
+  { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue1.png' },
+  { question: 'What is the keyword?', answer: 'đảm đang', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue2.png' },
+  { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue3.png' },
+  { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue4.png' },
+  { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue5.png' },
   { question: 'BONUS: Who painted the Mona Lisa?', answer: 'da vinci', type: 'text', isBonus: true },
 
   // Path 3 (12-17)
-  { question: 'What is the smallest prime number?', answer: '2', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green1.png' },
-  { question: 'What is the keyword?', answer: '24', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green2.png' },
-  { question: 'What is code?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/green3.png' },
-  { question: 'What is the title?', answer: 'mars', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green4.png' },
-  { question: 'How many legs does a spider have?', answer: '8', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green5.png' },
+  { question: 'What is the title?', answer: 'em xinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green1.png' },
+  { question: 'What is the keyword?', answer: 'đảm đang', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green2.png' },
+  { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green3.png' },
+  { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green4.png' },
+  { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green5.png' },
   { question: 'BONUS: What is the speed of light in km/s?', answer: '300000', type: 'text', isBonus: true },
 
   // Path 4 (18-23)
-  { question: 'What is the capital of Italy?', answer: 'rome', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple1.png' },
-  { question: 'How many days in a leap year?', answer: '366', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple2.png' },
-  { question: 'What is 15 + 25?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/purple3.png' },
-  { question: 'What gas do plants absorb?', answer: 'co2', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple4.png' },
-  { question: 'How many sides does a triangle have?', answer: '3', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple5.png' },
+  { question: 'What is the title?', answer: 'em xinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple1.png' },
+  { question: 'What is the keyword?', answer: 'đảm đang', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple2.png' },
+  { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple3.png' },
+  { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple4.png' },
+  { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple5.png' },
   { question: 'BONUS: What year was the internet invented?', answer: '1983', type: 'text', isBonus: true },
 
   // Path 5 (24-29)
-  { question: 'What is the capital of Spain?', answer: 'madrid', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown1.png' },
-  { question: 'How many minutes in an hour?', answer: '60', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown2.png' },
-  { question: 'What is 20 - 8?', answer: '102025', type: 'numberpicker', fields: 6, image: 'https://xpclass.vn/2010/display_on_site/brown3.png' },
-  { question: 'What is H2O?', answer: 'water', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown4.png' },
-  { question: 'How many colors in a rainbow?', answer: '7', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown5.png' },
+  { question: 'What is the title?', answer: 'em xinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown1.png' },
+  { question: 'What is the keyword?', answer: 'đảm đang', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown2.png' },
+  { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown3.png' },
+  { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown4.png' },
+  { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown5.png' },
   { question: 'BONUS: What is the smallest country in the world?', answer: 'vatican', type: 'text', isBonus: true },
 
   // Path 6 (30-35)
-  { question: 'What is the capital of Germany?', answer: 'berlin', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal1.png'  },
-  { question: 'How many sides does a square have?', answer: '4', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal2.png' },
-  { question: 'What is 9 x 9?', answer: '102025', type: 'numberpicker', fields: 6 ,image: 'https://xpclass.vn/2010/display_on_site/teal3.png' },
-  { question: 'What is the largest ocean?', answer: 'pacific', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal4.png' },
-  { question: 'How many months in a year?', answer: '12', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal5.png' },
+  { question: 'What is the title?', answer: 'em xinh', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal1.png'  },
+  { question: 'What is the keyword?', answer: 'đảm đang', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal2.png' },
+  { question: 'What is the code?', answer: '102025', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal3.png' },
+  { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal4.png' },
+  { question: 'Find the word?', answer: 'ngotngao', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal5.png' },
   { question: 'BONUS: What is the tallest mountain in the world?', answer: 'everest', type: 'text', isBonus: true },
 
   // Path 7 (36-41)
-  { question: 'What is the capital of England?', answer: 'london', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red1.png' },
-  { question: 'How many days in November?', answer: '30', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red2.png' },
-  { question: 'What is 50 / 5?', answer: '102025', type: 'numberpicker', fields: 6,image: 'https://xpclass.vn/2010/display_on_site/red3.png' },
-  { question: 'What animal is known as the King of the Jungle?', answer: 'lion', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red4.png' },
-  { question: 'How many weeks in a year?', answer: '52', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red5.png' },
+  { question: 'What is the title?', answer: 'em xinh', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red1.png' },
+  { question: 'What is the keyword?', answer: 'đảm đang', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red2.png' },
+  { question: 'What is the code?', answer: '102025', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red3.png' },
+  { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red4.png' },
+  { question: 'Find the word?', answer: 'ngotngao', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red5.png' },
   { question: 'BONUS: What is the currency of Japan?', answer: 'yen', type: 'text', isBonus: true },
 ]
 
@@ -71,6 +71,16 @@ const questionPaths = {
   5: [24, 25, 26, 27, 28, 29], // Path 5
   6: [30, 31, 32, 33, 34, 35], // Path 6
   7: [36, 37, 38, 39, 40, 41], // Path 7
+}
+
+const pathNames = {
+  1: 'Prestige',
+  2: 'Elegance',
+  3: 'Charm',
+  4: 'Glamour',
+  5: 'Grace',
+  6: 'Grandeur',
+  7: 'Vogue'
 }
 
 function Game({ user, onGameEnd, isAdmin }) {
@@ -93,6 +103,9 @@ function Game({ user, onGameEnd, isAdmin }) {
   const [pathUsers, setPathUsers] = useState({})
   const [pathScores, setPathScores] = useState({})
   const [allUserQuestionScores, setAllUserQuestionScores] = useState({})
+  const [enlargedImage, setEnlargedImage] = useState(null)
+  const [charBoxes, setCharBoxes] = useState([])
+  const [twoFieldAnswers, setTwoFieldAnswers] = useState({ field1: '', field2: '' })
 
   const wrongImages = [
     'https://xpclass.vn/leaderboard/wrong_image/vince%20mc.gif',
@@ -669,7 +682,7 @@ function Game({ user, onGameEnd, isAdmin }) {
                 disabled={lockedPaths.includes(pathNum)}
                 className={`path-btn ${lockedPaths.includes(pathNum) ? 'locked' : ''}`}
               >
-                <div className="path-number">Path {pathNum}</div>
+                <div className="path-number">{pathNames[pathNum]}</div>
                 {lockedPaths.includes(pathNum) && <div className="lock-icon">🔒 Locked</div>}
                 {!lockedPaths.includes(pathNum) && <div className="available">✓ Available</div>}
               </button>
@@ -701,7 +714,7 @@ function Game({ user, onGameEnd, isAdmin }) {
           {isAdmin ? (
             <strong style={{ fontSize: '1.3rem', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>Admin View</strong>
           ) : (
-            <><strong style={{ fontSize: '1.3rem', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>Path {selectedPath}</strong> | Total Score: {totalScore}</>
+            <><strong style={{ fontSize: '1.3rem', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>{pathNames[selectedPath]}</strong> | Total Score: {totalScore}</>
           )}
         </span>
         <button onClick={onGameEnd} className="back-to-menu-btn">Back to Menu</button>
@@ -721,7 +734,7 @@ function Game({ user, onGameEnd, isAdmin }) {
                   <img src={pathUser.avatar} alt={pathUser.display_name} className="path-avatar" />
                 )}
                 <div className="path-label-text">
-                  Path {pathNum}
+                  {pathNames[pathNum]}
                   {isMyPath && <div className="your-path-badge">Your Path</div>}
                   {isAdmin && pathScores[pathNum] !== undefined && (
                     <div style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.25rem' }}>
@@ -805,6 +818,11 @@ function Game({ user, onGameEnd, isAdmin }) {
                         if (canClick) {
                           setCurrentQuestion(globalIndex)
                           setShowModal(true)
+                          // Initialize char boxes based on answer length
+                          const answerLength = allQuestions[globalIndex].answer.length
+                          setCharBoxes(new Array(answerLength).fill(''))
+                          setAnswer('')
+                          setTwoFieldAnswers({ field1: '', field2: '' })
                         }
                       }}
                       className={`question-btn-small
@@ -849,7 +867,11 @@ function Game({ user, onGameEnd, isAdmin }) {
                 <img
                   src={questions[currentQuestion].image}
                   alt="Question"
-                  style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '20px' }}
+                  style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '20px', cursor: 'pointer' }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setEnlargedImage(questions[currentQuestion].image)
+                  }}
                 />
               )}
 
@@ -884,15 +906,167 @@ function Game({ user, onGameEnd, isAdmin }) {
                     />
                   ) : (
                     <>
-                      <input
-                        type="text"
-                        value={answer}
-                        onChange={(e) => setAnswer(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && answer.trim() && handleSubmit()}
-                        placeholder="Type your answer..."
-                        autoFocus
-                        disabled={feedback !== ''}
-                      />
+                      {/* Check if this is question 2 (index 1 in each path) */}
+                      {(() => {
+                        // Find which path and local index this question belongs to
+                        let questionType = 'charboxes' // default
+                        for (const indices of Object.values(questionPaths)) {
+                          const localIndex = indices.indexOf(currentQuestion)
+                          if (localIndex === 1) { // Question 2 is at index 1
+                            questionType = 'single'
+                            break
+                          } else if (localIndex === 3) { // Question 4 is at index 3
+                            questionType = 'twofields'
+                            break
+                          }
+                        }
+                        return questionType
+                      })() === 'single' ? (
+                        // Single input field for question 2
+                        <div style={{ marginBottom: '1rem' }}>
+                          <input
+                            type="text"
+                            value={answer}
+                            onChange={(e) => setAnswer(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' && answer.trim()) {
+                                handleSubmit()
+                              }
+                            }}
+                            disabled={feedback !== ''}
+                            autoFocus
+                            placeholder="Type your answer here..."
+                            style={{
+                              width: '100%',
+                              padding: '1rem',
+                              fontSize: '1.2rem',
+                              border: '2px solid #ddd',
+                              borderRadius: '8px',
+                              textAlign: 'center'
+                            }}
+                          />
+                        </div>
+                      ) : (() => {
+                        // Find which path and local index this question belongs to
+                        let isQuestion4 = false
+                        for (const indices of Object.values(questionPaths)) {
+                          const localIndex = indices.indexOf(currentQuestion)
+                          if (localIndex === 3) { // Question 4 is at index 3
+                            isQuestion4 = true
+                            break
+                          }
+                        }
+                        return isQuestion4
+                      })() ? (
+                        // Two separate input fields for question 4
+                        <div style={{ marginBottom: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                          <input
+                            type="text"
+                            value={twoFieldAnswers.field1}
+                            onChange={(e) => {
+                              const newAnswers = { ...twoFieldAnswers, field1: e.target.value }
+                              setTwoFieldAnswers(newAnswers)
+                              setAnswer(newAnswers.field1 + ' ' + newAnswers.field2)
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                // Move to second field or submit if both filled
+                                if (twoFieldAnswers.field2.trim()) {
+                                  handleSubmit()
+                                } else {
+                                  e.preventDefault()
+                                  const form = e.target.form || e.target.parentElement
+                                  const inputs = form.querySelectorAll('input[type="text"]')
+                                  if (inputs[1]) inputs[1].focus()
+                                }
+                              }
+                            }}
+                            disabled={feedback !== ''}
+                            autoFocus
+                            placeholder="First keyword (shorter)"
+                            style={{
+                              width: '100%',
+                              padding: '1rem',
+                              fontSize: '1.2rem',
+                              border: '2px solid #ddd',
+                              borderRadius: '8px',
+                              textAlign: 'center'
+                            }}
+                          />
+                          <input
+                            type="text"
+                            value={twoFieldAnswers.field2}
+                            onChange={(e) => {
+                              const newAnswers = { ...twoFieldAnswers, field2: e.target.value }
+                              setTwoFieldAnswers(newAnswers)
+                              setAnswer(newAnswers.field1 + ' ' + newAnswers.field2)
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' && twoFieldAnswers.field1.trim() && twoFieldAnswers.field2.trim()) {
+                                handleSubmit()
+                              }
+                            }}
+                            disabled={feedback !== ''}
+                            placeholder="Second keyword (longer)"
+                            style={{
+                              width: '100%',
+                              padding: '1rem',
+                              fontSize: '1.2rem',
+                              border: '2px solid #ddd',
+                              borderRadius: '8px',
+                              textAlign: 'center'
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        // Multiple character boxes for other questions
+                        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '1rem' }}>
+                          {charBoxes.map((char, index) => (
+                            <input
+                              key={index}
+                              type="text"
+                              maxLength="1"
+                              value={char}
+                              onChange={(e) => {
+                                const newValue = e.target.value.slice(-1)
+                                const newBoxes = [...charBoxes]
+                                newBoxes[index] = newValue
+                                setCharBoxes(newBoxes)
+                                setAnswer(newBoxes.join(''))
+
+                                // Auto-focus next box
+                                if (newValue && index < charBoxes.length - 1) {
+                                  const nextInput = e.target.parentElement.children[index + 1]
+                                  if (nextInput) nextInput.focus()
+                                }
+                              }}
+                              onKeyDown={(e) => {
+                                // Handle backspace to go to previous box
+                                if (e.key === 'Backspace' && !char && index > 0) {
+                                  const prevInput = e.target.parentElement.children[index - 1]
+                                  if (prevInput) prevInput.focus()
+                                }
+                                // Handle Enter to submit
+                                if (e.key === 'Enter' && charBoxes.join('').trim()) {
+                                  handleSubmit()
+                                }
+                              }}
+                              disabled={feedback !== ''}
+                              autoFocus={index === 0}
+                              style={{
+                                width: '3.5rem',
+                                height: '3.5rem',
+                                textAlign: 'center',
+                                fontSize: '1.5rem',
+                                border: '2px solid #ddd',
+                                borderRadius: '8px',
+                                textTransform: 'uppercase',
+                                padding: '0.5rem'
+                              }}
+                            />
+                          ))}
+                        </div>
+                      )}
                       <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', justifyContent: 'space-between' }}>
                         <button onClick={handleSubmit} disabled={!answer.trim() || feedback !== ''}>
                           Submit Answer
@@ -917,6 +1091,51 @@ function Game({ user, onGameEnd, isAdmin }) {
               />
             </div>
           )}
+        </div>
+      )}
+
+      {enlargedImage && (
+        <div
+          className="enlarged-image-overlay"
+          onClick={() => setEnlargedImage(null)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10000,
+            cursor: 'pointer',
+            padding: '2rem'
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: 'white',
+              padding: '1rem',
+              borderRadius: '8px',
+              maxWidth: '90vw',
+              maxHeight: '90vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={enlargedImage}
+              alt="Enlarged view"
+              style={{
+                maxWidth: '100%',
+                maxHeight: 'calc(90vh - 2rem)',
+                objectFit: 'contain'
+              }}
+            />
+          </div>
         </div>
       )}
     </div>
