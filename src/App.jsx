@@ -15,6 +15,35 @@ function App() {
   const [round2Open, setRound2Open] = useState(false)
 
   useEffect(() => {
+    // Setup background music
+    const audio = new Audio('https://xpclass.vn/2010/background%20music.mp3')
+    audio.loop = true
+    audio.volume = 0.3 // Set volume to 30%
+
+    // Try to play audio (may require user interaction on some browsers)
+    const playAudio = () => {
+      audio.play().catch(err => {
+        console.log('Audio autoplay prevented:', err)
+        // If autoplay fails, try playing on first user interaction
+        const playOnInteraction = () => {
+          audio.play()
+          document.removeEventListener('click', playOnInteraction)
+          document.removeEventListener('keydown', playOnInteraction)
+        }
+        document.addEventListener('click', playOnInteraction)
+        document.addEventListener('keydown', playOnInteraction)
+      })
+    }
+
+    playAudio()
+
+    return () => {
+      audio.pause()
+      audio.src = ''
+    }
+  }, [])
+
+  useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       if (session) {

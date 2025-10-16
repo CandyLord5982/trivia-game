@@ -79,7 +79,11 @@ function Round2({ user, onBack, isAdmin }) {
         }
 
         // Check if user already answered this question
-        if (data.current_question !== null) {
+        if (data.current_question !== null && !data.show_results) {
+          // Clear previous selection when starting a new question
+          setSelectedAnswer(null)
+          setHasAnswered(false)
+
           const { data: answerData } = await supabase
             .from('round2_answers')
             .select('*')
@@ -88,6 +92,18 @@ function Round2({ user, onBack, isAdmin }) {
             .maybeSingle()
 
           setHasAnswered(!!answerData)
+          if (answerData) {
+            setSelectedAnswer(answerData.answer_index)
+          }
+        } else if (data.show_results && data.current_question !== null) {
+          // When showing results, fetch the user's answer for this question
+          const { data: answerData } = await supabase
+            .from('round2_answers')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('question_index', data.current_question)
+            .maybeSingle()
+
           if (answerData) {
             setSelectedAnswer(answerData.answer_index)
           }
@@ -170,7 +186,23 @@ function Round2({ user, onBack, isAdmin }) {
 
     const question = round2Questions[currentQuestionIndex]
     const isCorrect = answerIndex === question.correct
-    const points = isCorrect ? Math.max(100 + (timeLeft * 10), 100) : 0
+
+    // Calculate points based on racing bonus
+    let points = 0
+    if (isCorrect) {
+      // Count how many people have already answered this question correctly
+      const { data: allAnswers } = await supabase
+        .from('round2_answers')
+        .select('user_id, is_correct')
+        .eq('question_index', currentQuestionIndex)
+        .eq('is_correct', true)
+
+      const correctAnswersCount = allAnswers ? allAnswers.length : 0
+      const position = correctAnswersCount + 1 // +1 because this user is answering now
+
+      // Racing bonus: 20 points for 1st, 18 for 2nd, 16 for 3rd, etc.
+      points = Math.max(20 - (position - 1) * 2, 0)
+    }
 
     try {
       // Get display name
@@ -350,8 +382,9 @@ function Round2({ user, onBack, isAdmin }) {
                   style={{
                     padding: '2rem',
                     fontSize: '1.2rem',
-                    background: selectedAnswer === idx ? 'rgba(255, 215, 0, 0.5)' : undefined,
-                    border: selectedAnswer === idx ? '3px solid #ffd700' : undefined,
+                    background: selectedAnswer === idx ? 'rgba(255, 215, 0, 0.5)' : 'rgba(255, 255, 255, 0.2)',
+                    border: selectedAnswer === idx ? '3px solid #ffd700' : '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '10px',
                     opacity: hasAnswered && selectedAnswer !== idx ? 0.5 : 1
                   }}
                 >
@@ -385,17 +418,6 @@ function Round2({ user, onBack, isAdmin }) {
                     {idx === round2Questions[currentQuestionIndex].correct && ' ✅'}
                   </div>
                 ))}
-              </div>
-
-              <div style={{ marginTop: '2rem', color: 'white' }}>
-                <h3>Leaderboard:</h3>
-                {questionResults
-                  .sort((a, b) => b.points - a.points)
-                  .map((result, idx) => (
-                    <div key={idx} style={{ padding: '0.5rem', fontSize: '1.1rem' }}>
-                      {idx + 1}. {result.display_name}: {result.points} pts
-                    </div>
-                  ))}
               </div>
             </div>
           )}

@@ -22,7 +22,7 @@ const allQuestions = [
   { question: 'BONUS: Who painted the Mona Lisa?', answer: 'da vinci', type: 'text', isBonus: true },
 
   // Path 3 (12-17)
-  { question: 'What is the title?', answer: 'em xinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green1.png' },
+  { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green1.png' },
   { question: 'What is the keyword?', answer: 'đảm đang', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green2.png' },
   { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green4.png' },
@@ -30,7 +30,7 @@ const allQuestions = [
   { question: 'BONUS: What is the speed of light in km/s?', answer: '300000', type: 'text', isBonus: true },
 
   // Path 4 (18-23)
-  { question: 'What is the title?', answer: 'em xinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple1.png' },
+  { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple1.png' },
   { question: 'What is the keyword?', answer: 'đảm đang', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple2.png' },
   { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple4.png' },
@@ -38,7 +38,7 @@ const allQuestions = [
   { question: 'BONUS: What year was the internet invented?', answer: '1983', type: 'text', isBonus: true },
 
   // Path 5 (24-29)
-  { question: 'What is the title?', answer: 'em xinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown1.png' },
+  { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown1.png' },
   { question: 'What is the keyword?', answer: 'đảm đang', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown2.png' },
   { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown4.png' },
