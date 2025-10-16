@@ -5,10 +5,120 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>For the ladies</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.0.0/tsparticles.engine.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@3.0.0/tsparticles.basic.min.js"></script>
   </head>
   <body>
+    <div id="tsparticles"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <!-- <script src="https://run.confettipage.com/here.js" data-confetticode="U2FsdGVkX19SS3yIEndmtFtKHjkCU2wIjl+u9u4cuBM5tZkZJqV/F80Io8tsnpDQ6Y0mB5KtKKZ58ECXfPWs5gqaemSKd8Wfr1M00mu1P64by1avswuf6bnO6dU3RyHa4Sjrwr0tZrpIF/TLdL7UizqRyjpQ8VJJ/J2d+nBjc8tLmsqjmTV/GSDrtXQdym//Xr7+ZLF8FGq/XR4oLIfJXelP3Y3HSmJV/y2Xkv4dzbhU9ZZLxYKoAZS5XtN+hLeRFVGwA2/HrKdFj2u/TWxF1SoLGdh4W/qGnCkUCFCxYHivmbBbaJkq6ha1Bedj6lposDgtRtA3KZXdUSLGdHs9X9F5BkvosN6jKNmLcEzcqgT/jDWJBz2Zci06WscivSkcQROMilvJoTwmn0ABH1nibvEHKkb/SA0yApHiiDoPqDyqfRDZi+ZbhbTnH7/wtHGPXov4ktNk7s6H49ypcvPyC0zcQwi4CVAvZ7duZS1OgQHCXurDwXqqq6MJDCOl3q5sYL5BV8fGZIBu7a+WXRiTZ6A/HiGkIceB6EvvhbvZ+2kHyDVW4dkjcM1GhWVROJ7aj2eY/OoHFWYvIPkxqamNSyXgyGmGA38BzNniNX35RvFTR9dCdNHtcNLikx2NKxJ0J5VjO4XounicqnwdKAHvpBG/zrXmLbxi1UQBTw0YIdY0lWj3E6Hs1xUhRr8J5jWubFJAOEAoC7Fc7w/ml0KBicYeUw5/KloUCJWIfbEqxy8ypcqkR2Jind1PO8VxYdQkH9Fszak8h84vezTUYwsbAPYbKkguNi1KNmvZwafft44="></script> -->
+    <script>
+      (async () => {
+        await loadBasic(tsParticles);
+
+        await tsParticles.load({
+          id: "tsparticles",
+          options: {
+            fullScreen: {
+              zIndex: 1
+            },
+            particles: {
+              color: {
+                value: ["#FFFFFF", "#FFd700"]
+              },
+              move: {
+                direction: "bottom",
+                enable: true,
+                outModes: {
+                  default: "out"
+                },
+                size: true,
+                speed: {
+                  min: 1,
+                  max: 3
+                }
+              },
+              number: {
+                value: 500,
+                density: {
+                  enable: true,
+                  area: 800
+                }
+              },
+              opacity: {
+                value: 1,
+                animation: {
+                  enable: false,
+                  startValue: "max",
+                  destroy: "min",
+                  speed: 0.3,
+                  sync: true
+                }
+              },
+              rotate: {
+                value: {
+                  min: 0,
+                  max: 360
+                },
+                direction: "random",
+                move: true,
+                animation: {
+                  enable: true,
+                  speed: 60
+                }
+              },
+              tilt: {
+                direction: "random",
+                enable: true,
+                move: true,
+                value: {
+                  min: 0,
+                  max: 360
+                },
+                animation: {
+                  enable: true,
+                  speed: 60
+                }
+              },
+              shape: {
+                type: ["circle", "square"],
+                options: {}
+              },
+              size: {
+                value: {
+                  min: 2,
+                  max: 4
+                }
+              },
+              roll: {
+                darken: {
+                  enable: true,
+                  value: 30
+                },
+                enlighten: {
+                  enable: true,
+                  value: 30
+                },
+                enable: true,
+                speed: {
+                  min: 15,
+                  max: 25
+                }
+              },
+              wobble: {
+                distance: 30,
+                enable: true,
+                move: true,
+                speed: {
+                  min: -15,
+                  max: 15
+                }
+              }
+            }
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

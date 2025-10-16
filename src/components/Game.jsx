@@ -116,6 +116,104 @@ function Game({ user, onGameEnd, isAdmin }) {
   ]
 
   useEffect(() => {
+    // Create canvas for particle effect
+    const canvas = document.createElement('canvas')
+    canvas.style.position = 'fixed'
+    canvas.style.top = '0'
+    canvas.style.left = '0'
+    canvas.style.width = '100%'
+    canvas.style.height = '100%'
+    canvas.style.pointerEvents = 'none'
+    canvas.style.zIndex = '1'
+    document.body.appendChild(canvas)
+
+    const ctx = canvas.getContext('2d')
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    // Particle class
+    class Particle {
+      constructor() {
+        this.reset()
+        this.y = Math.random() * canvas.height
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width
+        this.y = -10
+        this.size = Math.random() * 3 + 2
+        this.speedY = Math.random() * 2 + 1
+        this.speedX = Math.random() * 1 - 0.5
+        this.color = Math.random() > 0.5 ? '#FFFFFF' : '#FFd700'
+        this.rotation = Math.random() * 360
+        this.rotationSpeed = Math.random() * 4 - 2
+        this.isSquare = Math.random() > 0.5
+        this.wobble = Math.random() * 30
+        this.wobbleSpeed = Math.random() * 0.1 - 0.05
+      }
+
+      update() {
+        this.y += this.speedY
+        this.x += this.speedX + Math.sin(this.wobble) * 0.5
+        this.rotation += this.rotationSpeed
+        this.wobble += this.wobbleSpeed
+
+        if (this.y > canvas.height) {
+          this.reset()
+        }
+      }
+
+      draw() {
+        ctx.save()
+        ctx.translate(this.x, this.y)
+        ctx.rotate((this.rotation * Math.PI) / 180)
+        ctx.fillStyle = this.color
+
+        if (this.isSquare) {
+          ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size)
+        } else {
+          ctx.beginPath()
+          ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2)
+          ctx.fill()
+        }
+
+        ctx.restore()
+      }
+    }
+
+    // Create particles
+    const particles = []
+    for (let i = 0; i < 500; i++) {
+      particles.push(new Particle())
+    }
+
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      particles.forEach(particle => {
+        particle.update()
+        particle.draw()
+      })
+      requestAnimationFrame(animate)
+    }
+
+    animate()
+
+    // Handle window resize
+    const handleResize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    window.addEventListener('resize', handleResize)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      document.body.removeChild(canvas)
+    }
+  }, [])
+
+  useEffect(() => {
     fetchTotalScore()
     fetchAnsweredQuestions()
     fetchLockedPaths()
