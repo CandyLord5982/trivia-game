@@ -609,10 +609,10 @@ function Game({ user, onGameEnd, isAdmin }) {
           }
         }
 
-        // Calculate racing bonus: 40 points for 1st, 38 for 2nd, 36 for 3rd, etc.
+        // Calculate racing bonus: 40 points for 1st, 35 for 2nd, 30 for 3rd, etc.
         // Position includes all who answered (correct or skipped)
         const position = usersWhoAnsweredBonus.size + 1
-        racingBonus = Math.max(40 - (position - 1) * 2, 0) // 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0
+        racingBonus = Math.max(40 - (position - 1) * 5, 0) // 40, 35, 30, 25, 20, 15, 10, 5, 0
 
         points = racingBonus
         const positionSuffix = position === 1 ? 'st' : position === 2 ? 'nd' : position === 3 ? 'rd' : 'th'
