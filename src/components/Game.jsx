@@ -46,7 +46,7 @@ const allQuestions = [
   { question: 'BONUS: What is the message?', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 
   // Path 6 (30-35)
-  { question: 'What is the title?', answer: 'em xinh', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal1.png'  },
+  { question: 'What is the title?', answer: 'emxinh', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal1.png'  },
   { question: 'What is the keyword?', answer: 'đảm đang', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal2.png' },
   { question: 'What is the code?', answer: '102025', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal4.png' },
@@ -54,7 +54,7 @@ const allQuestions = [
   { question: 'BONUS: What is the message?', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 
   // Path 7 (36-41)
-  { question: 'What is the title?', answer: 'em xinh', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red1.png' },
+  { question: 'What is the title?', answer: 'emxinh', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red1.png' },
   { question: 'What is the keyword?', answer: 'đảm đang', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red2.png' },
   { question: 'What is the code?', answer: '102025', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red4.png' },
