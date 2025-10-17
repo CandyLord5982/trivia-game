@@ -11,7 +11,7 @@ const allQuestions = [
   { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink4.png' },
   { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/pink5.png' },
-  { question: 'BONUS: What is the chemical symbol for gold?', answer: 'happinesstotheladies', type: 'text', isBonus: true },
+  { question: 'BONUS: What is the message? ', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 
   // Path 2 (6-11)
   { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue1.png' },
@@ -19,7 +19,7 @@ const allQuestions = [
   { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue4.png' },
   { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/blue5.png' },
-  { question: 'BONUS: Who painted the Mona Lisa?', answer: 'happinesstotheladies', type: 'text', isBonus: true },
+  { question: 'BONUS: What is the message?', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 
   // Path 3 (12-17)
   { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green1.png' },
@@ -27,7 +27,7 @@ const allQuestions = [
   { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green4.png' },
   { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/green5.png' },
-  { question: 'BONUS: What is the speed of light in km/s?', answer: 'happinesstotheladies', type: 'text', isBonus: true },
+  { question: 'BONUS: What is the message?', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 
   // Path 4 (18-23)
   { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple1.png' },
@@ -35,7 +35,7 @@ const allQuestions = [
   { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple4.png' },
   { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/purple5.png' },
-  { question: 'BONUS: What year was the internet invented?', answer: 'happinesstotheladies', type: 'text', isBonus: true },
+  { question: 'BONUS: What is the message?', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 
   // Path 5 (24-29)
   { question: 'What is the title?', answer: 'emxinh', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown1.png' },
@@ -43,7 +43,7 @@ const allQuestions = [
   { question: 'What is the code?', answer: '102025', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown4.png' },
   { question: 'Find the word?', answer: 'ngotngao', type: 'text', image: 'https://xpclass.vn/2010/display_on_site/brown5.png' },
-  { question: 'BONUS: What is the smallest country in the world?', answer: 'happinesstotheladies', type: 'text', isBonus: true },
+  { question: 'BONUS: What is the message?', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 
   // Path 6 (30-35)
   { question: 'What is the title?', answer: 'em xinh', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal1.png'  },
@@ -51,7 +51,7 @@ const allQuestions = [
   { question: 'What is the code?', answer: '102025', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal4.png' },
   { question: 'Find the word?', answer: 'ngotngao', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/teal5.png' },
-  { question: 'BONUS: What is the tallest mountain in the world?', answer: 'happinesstotheladies', type: 'text', isBonus: true },
+  { question: 'BONUS: What is the message?', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 
   // Path 7 (36-41)
   { question: 'What is the title?', answer: 'em xinh', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red1.png' },
@@ -59,7 +59,7 @@ const allQuestions = [
   { question: 'What is the code?', answer: '102025', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red3.png' },
   { question: 'What are the two keywords?', answer: 'đáng yêu duyên dáng', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red4.png' },
   { question: 'Find the word?', answer: 'ngotngao', type: 'text',image: 'https://xpclass.vn/2010/display_on_site/red5.png' },
-  { question: 'BONUS: What is the currency of Japan?', answer: 'happinesstotheladies', type: 'text', isBonus: true },
+  { question: 'BONUS: What is the message?', answer: 'lovetoourladies', type: 'text', isBonus: true,image: 'https://xpclass.vn/2010/bonus.jpg' },
 ]
 
 // Organize questions into 7 paths (6 questions each: 5 regular + 1 bonus)
@@ -609,10 +609,10 @@ function Game({ user, onGameEnd, isAdmin }) {
           }
         }
 
-        // Calculate racing bonus: 20 points for 1st, 18 for 2nd, 16 for 3rd, etc.
+        // Calculate racing bonus: 40 points for 1st, 38 for 2nd, 36 for 3rd, etc.
         // Position includes all who answered (correct or skipped)
         const position = usersWhoAnsweredBonus.size + 1
-        racingBonus = Math.max(20 - (position - 1) * 2, 0) // 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0
+        racingBonus = Math.max(40 - (position - 1) * 2, 0) // 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0
 
         points = racingBonus
         const positionSuffix = position === 1 ? 'st' : position === 2 ? 'nd' : position === 3 ? 'rd' : 'th'
@@ -957,7 +957,7 @@ function Game({ user, onGameEnd, isAdmin }) {
               return '1';
             })()}>
               {questions[currentQuestion].isBonus && (
-                <div className="bonus-badge">🌟 BONUS QUESTION - 20 Points! 🌟</div>
+                <div className="bonus-badge">🌟 BONUS QUESTION - Up to 40 Points! 🌟</div>
               )}
               <h2>{questions[currentQuestion].question}</h2>
 

@@ -160,33 +160,36 @@ function Auth() {
               <h2>How to Play</h2>
 
               <div style={{ textAlign: 'left', color: 'white', lineHeight: '1.8' }}>
-                <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>🎯 Game Overview</h3>
-                <p>This is a competitive trivia game where teams race to answer questions and earn points!</p>
+                <h3 style={{ marginTop: '0.5rem', marginBottom: '0.5rem', textAlign: 'center', fontSize: '1.3rem' }}>🌸 Welcome to the Women's Day Race! 🌸</h3>
+                <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Today we celebrate your beauty, intelligence, and problem-solving skills. Get ready to put your wits to the test in this puzzle adventure. Work with your supporter, think smart, and may the best player win!</p>
 
-                <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>🛤️ Choosing Your Path</h3>
-                <p>• At the start, select one of 7 paths (each path has 6 questions)</p>
-                <p>• Once chosen, your path is locked for other players</p>
-                <p>• Each path has 5 regular questions + 1 bonus question</p>
+                <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>📋 Overview</h3>
+                <p>7 players compete in a puzzle-solving challenge. Each player has 1 supporter to help them find and solve questions hidden around the company.</p>
+
+                <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>🔍 Finding Questions</h3>
+                <p>• 5 main questions + 1 bonus question are hidden throughout the company</p>
+                <p>• Hints appear on your screen showing where each question is located</p>
+                <p>• Work with your supporter to find the questions</p>
+
+                <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>✏️ Solving Questions</h3>
+                <p>• Once you find a question, solve it and type your answer in the input field on the screen</p>
+                <p>• Speed matters! The first person to answer correctly gets the most points</p>
 
                 <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>📊 Scoring System</h3>
-                <p><strong>Regular Questions:</strong></p>
-                <p>• Base points: 10 points</p>
-                <p>• Racing bonus: Up to +10 extra points for being first!</p>
-                <p>• The faster you answer compared to other teams, the more bonus you get</p>
+                <p><strong>Correct answers (in order):</strong></p>
+                <p>• 1st place: 20 points</p>
+                <p>• 2nd place: 19 points</p>
+                <p>• 3rd place: 18 points</p>
+                <p>• And so on...</p>
 
-                <p style={{ marginTop: '1rem' }}><strong>Bonus Questions (⭐):</strong></p>
-                <p>• Unlocked after completing all 5 regular questions</p>
-                <p>• Worth up to 20 points based on racing position!</p>
-                <p>• First team gets 20pts, second gets 18pts, etc.</p>
+                <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>💡 Need Help?</h3>
+                <p>Ask NPC Thanos for assistance:</p>
+                <p>• 1st hint: Costs 1 point</p>
+                <p>• 2nd hint: Costs 2 points</p>
+                <p>• (Hint costs reset for each new question)</p>
 
-                <p style={{ marginTop: '1rem' }}><strong>Skip Option:</strong></p>
-                <p>• Can't answer? Skip for 5 points and move on!</p>
-
-                <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>🎮 Game Features</h3>
-                <p>• Questions unlock sequentially - answer in order!</p>
-                <p>• See all teams' progress in real-time</p>
-                <p>• Each path has a unique color (except bonus = yellow)</p>
-                <p>• Track your score on the leaderboard</p>
+                <h3 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}>⏭️ Can't Solve It?</h3>
+                <p>Skip the question to earn 5 points and move to the next one</p>
 
                 <div style={{
                   marginTop: '2rem',
@@ -195,7 +198,7 @@ function Auth() {
                   borderRadius: '10px',
                   textAlign: 'center'
                 }}>
-                  <strong>🏆 May the fastest team win! 🏆</strong>
+                  <strong>🏆 Good luck and have fun! 🏆</strong>
                 </div>
               </div>
             </div>
