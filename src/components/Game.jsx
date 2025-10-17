@@ -79,7 +79,7 @@ const pathNames = {
   3: 'Charm',
   4: 'Glamour',
   5: 'Grace',
-  6: 'Grandeur',
+  6: 'Grander',
   7: 'Vogue'
 }
 
